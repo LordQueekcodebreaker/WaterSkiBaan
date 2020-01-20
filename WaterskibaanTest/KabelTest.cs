@@ -30,7 +30,9 @@ namespace WaterskibaanTest
             Kabel kabel = new Kabel();
             for (int i = 0; i < 10; i++)
             {
-                kabel.ToevoegenAanLijst(new Lijn(i));
+                Lijn lijn = new Lijn(i);
+                lijn.Sporter = new Sporter(MoveCollection.GetWillekeurigeMoves()) { AantalRondesTeGaan = 1 };
+                kabel.ToevoegenAanLijst(lijn);
             }
             //act
             kabel.VerschuifLijnen();
@@ -76,7 +78,10 @@ namespace WaterskibaanTest
             Kabel kabel = new Kabel();
             for (int i = 0; i < 10; i++)
             {
-                kabel.ToevoegenAanLijst(new Lijn(i));
+                Lijn lijn = new Lijn(i);
+                lijn.Sporter = new Sporter(MoveCollection.GetWillekeurigeMoves()) { AantalRondesTeGaan = 1 };
+                kabel.ToevoegenAanLijst(lijn);
+
             }
             //act
             Lijn testLijn = kabel.VerwijderLijnVanKabel();

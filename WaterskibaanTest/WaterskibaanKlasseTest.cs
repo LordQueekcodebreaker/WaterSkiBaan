@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +9,6 @@ namespace WaterskibaanTest
     [TestFixture]
     class WaterskibaanKlasseTest
     {
-        [Test]
         public void SporterStart_NoSKiesORvest_ThrowException()
         {
             //arrange

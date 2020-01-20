@@ -58,7 +58,7 @@ namespace Waterskibaan
 
         public Lijn VerwijderLijnVanKabel()
         {
-            var laatstelijn = Lijnen.Last;
+            var laatstelijn = Lijnen?.Last;
             if (laatstelijn != null && laatstelijn.Value.PositieOpDeLijn == 9 && laatstelijn.Value.Sporter.AantalRondesTeGaan == 1)
             {
                 var verwijderdelijn = Lijnen.Last.Value;
