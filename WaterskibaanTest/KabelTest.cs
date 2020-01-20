@@ -69,13 +69,21 @@ namespace WaterskibaanTest
 
         }
 
-        //[Test]
-        //public void Test4()
-        //{
-        //    //arrange
-        //    //act
-        //    //assert
-        //}
+        [Test]
+        public void VerwijderLijnVanKabel_LastPositionFilled_ListCountDecreases()
+        {
+            //arrange
+            Kabel kabel = new Kabel();
+            for (int i = 0; i < 10; i++)
+            {
+                kabel.ToevoegenAanLijst(new Lijn(i));
+            }
+            //act
+            Lijn testLijn = kabel.VerwijderLijnVanKabel();
+            
+            //assert
+            Assert.IsNotNull(testLijn);
+        }
 
         //[Test]
         //public void Test5()
