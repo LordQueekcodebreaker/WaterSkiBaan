@@ -11,11 +11,9 @@ namespace Waterskibaan
     {
         static void Main(string[] args)
         {
-            Waterskibaan waterskibaan = new Waterskibaan();
-            for (int i = 0; i < 20; i++)
-            {
-                waterskibaan.SporterStart(new Sporter(MoveCollection.GetWillekeurigeMoves()) { Skies = new Skies(), Zwemvest = new Zwemvest()});
-            }
+            Game game = new Game();
+            game.Intialize();
+            game.StartTimer(100);
         }
     }
 }
