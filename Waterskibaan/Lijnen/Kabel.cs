@@ -30,9 +30,7 @@ namespace Waterskibaan
                 Lijnen.AddFirst(lijn);
                 lijn.PositieOpDeLijn = 0;
             }
-
         }
-
 
         public void VerschuifLijnen()
         {
@@ -45,9 +43,8 @@ namespace Waterskibaan
                 {
                     lijn.PositieOpDeLijn = 0;
                     laatsteLijnTerugNaarStart = true;
-                    //TODO: Rondes Verwerken
-                    //// ronde eraf
-                    //lijn.Sporter.AantalRondesTeGaan--;
+                    //ronde eraf
+                    lijn.Sporter.AantalRondesTeGaan--;
                 }
             }
             //terug naar af omdat lijnen in volgorde van positie moeten staan
@@ -57,21 +54,18 @@ namespace Waterskibaan
                 Lijnen.RemoveLast();
                 Lijnen.AddFirst(laaststelijn);
             }
-
         }
 
         public Lijn VerwijderLijnVanKabel()
         {
             var laatstelijn = Lijnen.Last;
-            //&& laatstelijn.Value.Sporter.AantalRondesTeGaan== 1
-            if (laatstelijn != null && laatstelijn.Value.PositieOpDeLijn == 9 )
+            if (laatstelijn != null && laatstelijn.Value.PositieOpDeLijn == 9 && laatstelijn.Value.Sporter.AantalRondesTeGaan == 1)
             {
                 var verwijderdelijn = Lijnen.Last.Value;
                 verwijderdelijn.Sporter = null;
                 Lijnen.RemoveLast();
                 return verwijderdelijn;
             }
-
             return null;
         }
 
@@ -90,8 +84,6 @@ namespace Waterskibaan
             return kabellijst;
 
         }
-
-
 
         public override string ToString()
         {

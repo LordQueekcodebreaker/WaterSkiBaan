@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Waterskibaan
 {
-    class MoveCollection
+    public class MoveCollection
     {
         public static List<IMoves> GetWillekeurigeMoves()
         {
-            List<IMoves> Moves = new List<IMoves>() { new OpEenBeen(), new Salto(), new Koprol()};
+            List<IMoves> Moves = new List<IMoves>() { new OpEenBeen(), new Salto(), new Koprol() };
             var LijstmetBewegingen = new List<IMoves>();
             var random = new Random();
             var aantalbewegingen = random.Next(1, Moves.Count + 1);

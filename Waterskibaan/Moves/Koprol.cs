@@ -10,7 +10,10 @@ namespace Waterskibaan
     {
         public int Move()
         {
-            return 5;
+            Random r = new Random();
+            int b = r.Next(4);
+            if (b <= 2) { return 5; }
+            return 0;
         }
 
         public string Naam()

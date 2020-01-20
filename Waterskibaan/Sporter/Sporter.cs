@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,8 +14,8 @@ namespace Waterskibaan
         public Zwemvest Zwemvest { get; set; }
 
         public Skies Skies { get; set; }
-        //TODO :Add color
-        //public Color KledingKleur { get; set; }
+        
+        public Color KledingKleur { get; set; }
 
         public int BehaaldePunten { get; set; }
 
@@ -25,13 +26,8 @@ namespace Waterskibaan
         public Sporter(List<IMoves> moves)
         {
             this.Moves = moves;
-
-            //TODO :Add color
-
-            //Random rand = new Random();
-
-            //KledingKleur = Color.FromRgb((byte)(rand.Next(0, 256)), (byte)(rand.Next(0, 256)), (byte)(rand.Next(0, 256)));
-
+            Random rand = new Random();
+            KledingKleur = Color.FromArgb(rand.Next(255), rand.Next(255), rand.Next(255));
         }
     }
 }

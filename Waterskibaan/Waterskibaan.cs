@@ -19,6 +19,26 @@ namespace Waterskibaan
             }
         }
 
+        public void SporterStart(Sporter sp)
+        {
+            if (sp.Zwemvest == null || sp.Skies == null)
+            {
+                throw new Exception("Een sporter behoort een Zwemvest EN Skies te hebben!");
+            }
+            if (_kabel.IsStartPositieLeeg() == true)
+            {
+                var getLijn = _lijnenVoorraad.VerwijderEersteLijn();
+
+                getLijn.Sporter = sp;
+
+                _kabel.NeemLijnInGebruik(getLijn);
+            }
+            else
+            {
+                return;
+            }
+        }
+
         public void VerplaatsKabel()
         {
             _kabel.VerschuifLijnen();
