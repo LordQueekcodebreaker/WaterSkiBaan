@@ -2,5 +2,7 @@
 {
     public interface IMoves
     {
+        int Move();
+        string Naam();
     }
 }
