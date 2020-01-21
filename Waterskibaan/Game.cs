@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Drawing;
 
 namespace Waterskibaan
 {
-    public class Game
+    public class Game 
     {
+        public  Logger Log { get; set; }
         public Timer timer { get; set; }
         public Waterskibaan waterskiBaan = new Waterskibaan();
 
@@ -33,6 +35,7 @@ namespace Waterskibaan
             NieuweBezoeker += OnNieuweBezoeker;
             instructieAfgelopen += OninstructieAfgelopen;
             LijnenVerplaatst += OnLijnenVerplaatst;
+            Log = new Logger(waterskiBaan._kabel);
         }
 
         public void StartTimer(int interval)
@@ -50,7 +53,6 @@ namespace Waterskibaan
             timer.Dispose();
         }
 
-
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             timed++;
@@ -59,34 +61,35 @@ namespace Waterskibaan
                 Sporter sporter = new Sporter(MoveCollection.GetWillekeurigeMoves());
                 NieuweBezoeker?.Invoke(new NieuweBezoekerArgs(sporter));
             }
-            if (timed % 20 == 0)
+            if (timed % 21 == 0)
             {
                 List<Sporter> sporters = wachtrijInstructie.SportersVerlatenRij(wachtrijInstructie.GetAlleSporters().Count);
                 instructieAfgelopen?.Invoke(new InstructieAfgelopenArgs(sporters));
             }
-            if (timed > 30 && timed % 4 == 0)
+            if (timed > 30 && timed % 3 == 0)
             {
                 LijnenVerplaatst?.Invoke();
             }
         }
 
-
-        //functional
         private void OnNieuweBezoeker(NieuweBezoekerArgs e)
         {
             wachtrijInstructie.SporterNeemtPlaats(e.Sporter);
+            Random r = new Random();
+            e.Sporter.AantalRondesTeGaan = r.Next(3);
             Console.WriteLine($"event on nieuwe bezoeker {wachtrijInstructie.GetAantal()} ");
+            Log.Logging.Add(e.Sporter);
         }
 
-        //functional
         private void OninstructieAfgelopen(InstructieAfgelopenArgs e)
         {
             foreach (Sporter sporter in e.Sporters)
             {
                 instructieGroep.SporterNeemtPlaats(sporter);
+                Log.GooiSportersinLijst(sporter);
             }
             Console.WriteLine($"Event on instr. afgelopen {instructieGroep.GetAantal()}");
-            System.Threading.Thread.Sleep(10000);
+            System.Threading.Thread.Sleep(1000);
             List<Sporter> sporters = instructieGroep.SportersVerlatenRij(instructieGroep.GetAlleSporters().Count);
             foreach (Sporter sporter in sporters)
             {
@@ -104,17 +107,14 @@ namespace Waterskibaan
                 List<Sporter> sporters = wachtrijStarten.SportersVerlatenRij(1);
                 if (sporters.Count > 0)
                 {
-
+                    
                     var sporter = sporters[0];
                     sporter.Zwemvest = new Zwemvest();
                     sporter.Skies = new Skies();
-
-                    Console.WriteLine("reached it");
                     waterskiBaan.SporterStart(sporter);
                 }
             }
-            Console.WriteLine($"status{waterskiBaan}");
-
+            Console.WriteLine($"status\n{waterskiBaan}");
         }
     }
 }

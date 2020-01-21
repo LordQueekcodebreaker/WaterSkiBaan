@@ -15,7 +15,7 @@ namespace Waterskibaan
 
         public Skies Skies { get; set; }
         
-        public Color KledingKleur { get; set; }
+        public Tuple<byte,byte,byte> KledingKleur { get; set; }
 
         public int BehaaldePunten { get; set; }
 
@@ -27,7 +27,7 @@ namespace Waterskibaan
         {
             this.Moves = moves;
             Random rand = new Random();
-            KledingKleur = Color.FromArgb(rand.Next(255), rand.Next(255), rand.Next(255));
+            KledingKleur = new Tuple<byte, byte, byte>((byte)rand.Next(255), (byte)rand.Next(255), (byte)rand.Next(255));
         }
     }
 }

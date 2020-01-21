@@ -1,0 +1,54 @@
+﻿<Window x:Class="WaterskibaanScherm.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WaterskibaanScherm"
+        mc:Ignorable="d"
+        Title="Waterskibaan" Height="450" Width="800"
+        ResizeMode="NoResize">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Canvas x:Name="wpfCVWachtrijInstructie" Grid.Row="0" Background="Aqua" Margin="3"/>
+        <Canvas x:Name="wpfCVInstructiegroep" Grid.Row="1" Background="AntiqueWhite" Margin="3"/>
+        <Canvas x:Name="wpfCVWachtrijStarten" Grid.Row="2" Background="Aqua" Margin="3"/>
+        <Button x:Name="wpfBTStart" Content="Start/Stop" Width="80" Height="20" Grid.Row="5" Click="wpfBTStart_Click" />
+        <TextBlock x:Name="wpfRT0" Text="0" TextAlignment="Center"  Height="40" Width="40" Grid.Row="3" Margin="30,24,713.6,10.4" Visibility="Hidden"  />
+        <TextBlock x:Name="wpfRT1" Text="1" TextAlignment="Center"  Height="40" Width="40" Grid.Row="3" Margin="75,24,668.6,10.4" Visibility="Hidden"/>
+        <TextBlock x:Name="wpfRT2" Text="2" TextAlignment="Center"  Height="40" Width="40" Grid.Row="3" Margin="120,24,623.6,10.4" Visibility="Hidden"/>
+        <TextBlock x:Name="wpfRT3" Text="3" TextAlignment="Center"  Height="40" Width="40" Grid.Row="3" Margin="165,24,578.6,10.4" Visibility="Hidden"/>
+        <TextBlock x:Name="wpfRT4" Text="4" TextAlignment="Center"  Height="40" Width="40" Grid.Row="3" Margin="210,24,533.6,10.4" Visibility="Hidden"/>
+        <TextBlock x:Name="wpfRT5" Text="5" TextAlignment="Center"  Height="40" Width="40" Grid.Row="3" Margin="255,24,488.6,10.4" Visibility="Hidden"/>
+        <TextBlock x:Name="wpfRT6" Text="6" TextAlignment="Center"  Height="40" Width="40" Grid.Row="3" Margin="300,24,443.6,10.4" Visibility="Hidden"/>
+        <TextBlock x:Name="wpfRT7" Text="7" TextAlignment="Center"  Height="40" Width="40" Grid.Row="3" Margin="345,24,398.6,10.4" Visibility="Hidden"/>
+        <TextBlock x:Name="wpfRT8" Text="8" TextAlignment="Center"  Height="40" Width="40" Grid.Row="3" Margin="392,24,351.6,10.4" Visibility="Hidden"/>
+        <TextBlock x:Name="wpfRT9" Text="9" TextAlignment="Center"  Height="40" Width="40" Grid.Row="3" Margin="441,24,302.6,10.4" Visibility="Hidden"/>
+
+        <TextBlock Text="Laatst uitgevoerde Move :" Grid.Row="3" Margin="0,74,642.6,55.8" Grid.RowSpan="2"  />
+        <TextBlock Text="Aantal beschikbare lijnen :" Grid.Row="4" Margin="0,18.6,641.6,36.8"  />
+        <TextBlock Text="Hoeveel bezoekers totaal :" Grid.Row="4" Margin="0,37.6,640.6,17.8"  />
+        <TextBlock Text="Aantal bezoekeris rood :" Grid.Row="4" Margin="-2,56.6,641.6,36.4" Grid.RowSpan="2"  />
+        <TextBlock Text="Bezoeker op kleur gesorteerd :" Grid.Row="3" Margin="255,74,351.6,55.8" Grid.RowSpan="2"  />
+        <TextBlock Text="Totaal aantal rondjes :" Grid.Row="4" Margin="256,18.6,407.6,36.8"  />
+        <TextBlock Text="Unieke moves :" Grid.Row="4" Margin="256,37.6,443.6,17.8"  />
+        <TextBlock Text="HoogsteScore :" Grid.Row="4" Margin="255,55.6,406.6,37.4" Grid.RowSpan="2"  />
+
+        <TextBlock x:Name="wpfLBLastMove" Grid.Row="3" Margin="143,74,533.6,55.8" Grid.RowSpan="2" FontSize="10" TextAlignment="Center"/>
+        <TextBlock x:Name="wpfLBAvailableLines" Grid.Row="4" Margin="143,18.6,533.6,36.8" FontSize="10" TextAlignment="Center"/>
+        <TextBlock x:Name="wpfLBTotalVisitors" Grid.Row="4" Margin="142,37.6,533.6,17.8" FontSize="10" TextAlignment="Center"/>
+        <TextBlock x:Name="wpfLBRedVistors" Grid.Row="4" Margin="143,56.6,533.6,37.4" Grid.RowSpan="2" FontSize="10" TextAlignment="Center"/>
+        <TextBlock x:Name="wpfLBTotalAmountRounds" Grid.Row="4" Margin="422,18.6,302.6,36.8" FontSize="10" TextAlignment="Center"/>
+        <TextBlock x:Name="wpfLBUniqueMoves" Grid.Row="4" Margin="422,37.6,105.6,17.8" FontSize="10" TextAlignment="Center"/>
+        <TextBlock x:Name="wpfLBHighestScore" Grid.Row="4" Margin="421,55.6,301.6,37.4" FontSize="10" TextAlignment="Center" Grid.RowSpan="2"/>
+        
+        <Canvas x:Name="wpfCVSortedOnColor" Grid.Row="3" Margin="422,74,9.6,55.8" Grid.RowSpan="2" />
+    </Grid>
+
+</Window>
