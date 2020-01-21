@@ -22,13 +22,16 @@ namespace WaterskibaanScherm
     /// </summary>
     public partial class MainWindow : Window, IObserver
     {
+        public Timer timer { get; set; }
         private Game game = new Game();
         bool gameRunning = false;
         int currentPosition = 22;
 
+
         List<Sporter> _startWachtrij = new List<Sporter>();
         List<Sporter> _instructieWachtrij = new List<Sporter>();
         List<Sporter> _instructiegroep = new List<Sporter>();
+
 
         public MainWindow()
         {
@@ -36,32 +39,25 @@ namespace WaterskibaanScherm
             game.Intialize();
         }
 
-        public void StartUpdating()
-        {
-            Timer timer = new Timer(1000);
-            timer.AutoReset = true;
-            timer.Elapsed += UpdateScreen;
-            timer.Start();
-           
-        }
 
-        private void UpdateScreen(object sender, ElapsedEventArgs e)
+        private void WpfNieuweBezoeker()
         {
-            Dispatcher.Invoke(UpdateLists);
+            _instructieWachtrij = game.wachtrijInstructie.GetAlleSporters();
+            DrawSporters(_instructieWachtrij, wpfCVWachtrijInstructie);
+            _instructiegroep = game.instructieGroep.GetAlleSporters();
+            DrawSporters(_instructiegroep, wpfCVInstructiegroep);
+            wpfLBLineAmount.Content = game.waterskiBaan._lijnenVoorraad.GetAantalLijnen();
+            _startWachtrij = game.wachtrijStarten.GetAlleSporters();
+            DrawSporters(_startWachtrij, wpfCVWachtrijStarten);
+            UpdateKabel();
         }
 
         public void UpdateLists()
         {
-            wpfLBLineAmount.Content = game.waterskiBaan._lijnenVoorraad.GetAantalLijnen();
-
-            _instructieWachtrij = game.wachtrijInstructie.GetAlleSporters();
-            DrawSporters(_instructieWachtrij, wpfCVWachtrijInstructie);
-
             _instructiegroep = game.instructieGroep.GetAlleSporters();
             DrawSporters(_instructiegroep, wpfCVInstructiegroep);
 
-            _startWachtrij = game.wachtrijStarten.GetAlleSporters();
-            DrawSporters(_startWachtrij, wpfCVWachtrijStarten);
+
 
             if (game.waterskiBaan._kabel.Lijnen.Count > 0)
             {
@@ -74,53 +70,60 @@ namespace WaterskibaanScherm
         //TODO: Improve if possible
         public void UpdateKabel()
         {
-            foreach (Lijn lijn in game.waterskiBaan._kabel.Lijnen)
+            foreach (var lijn in game.waterskiBaan._kabel.Lijnen)
             {
-                if (lijn.Sporter!= null)
+                if (lijn.Sporter != null)
                 {
                     SolidColorBrush brush = new SolidColorBrush(Color.FromRgb(lijn.Sporter.KledingKleur.Item1, lijn.Sporter.KledingKleur.Item2, lijn.Sporter.KledingKleur.Item3));
-                    switch (lijn.PositieOpDeLijn)
+                    if (lijn.PositieOpDeLijn == 0)
                     {
-                        case 0:
-                            wpfRT0.Background = brush;
-                            wpfRT0.Visibility = Visibility.Visible;
-                            break;
-                        case 1:
-                            wpfRT1.Background = brush;
-                            wpfRT1.Visibility = Visibility.Visible;
-                            break;
-                        case 2:
-                            wpfRT2.Background = brush;
-                            wpfRT2.Visibility = Visibility.Visible;
-                            break;
-                        case 3:
-                            wpfRT3.Background = brush;
-                            wpfRT3.Visibility = Visibility.Visible;
-                            break;
-                        case 4:
-                            wpfRT4.Background = brush;
-                            wpfRT4.Visibility = Visibility.Visible;
-                            break;
-                        case 5:
-                            wpfRT5.Background = brush;
-                            wpfRT5.Visibility = Visibility.Visible;
-                            break;
-                        case 6:
-                            wpfRT6.Background = brush;
-                            wpfRT6.Visibility = Visibility.Visible;
-                            break;
-                        case 7:
-                            wpfRT7.Background = brush;
-                            wpfRT7.Visibility = Visibility.Visible;
-                            break;
-                        case 8:
-                            wpfRT8.Background = brush;
-                            wpfRT8.Visibility = Visibility.Visible;
-                            break;
-                        case 9:
-                            wpfRT9.Background = brush;
-                            wpfRT9.Visibility = Visibility.Visible;
-                            break;
+                        wpfRT0.Background = brush;
+                        wpfRT0.Visibility = Visibility.Visible;
+                    }
+                    if (lijn.PositieOpDeLijn == 1)
+                    {
+                        wpfRT1.Background = brush;
+                        wpfRT1.Visibility = Visibility.Visible;
+                    }
+                    if (lijn.PositieOpDeLijn == 2)
+                    {
+                        wpfRT2.Background = brush;
+                        wpfRT2.Visibility = Visibility.Visible;
+                    }
+                    if (lijn.PositieOpDeLijn == 3)
+                    {
+                        wpfRT3.Background = brush;
+                        wpfRT3.Visibility = Visibility.Visible;
+                    }
+                    if (lijn.PositieOpDeLijn == 4)
+                    {
+                        wpfRT4.Background = brush;
+                        wpfRT4.Visibility = Visibility.Visible;
+                    }
+                    if (lijn.PositieOpDeLijn == 5)
+                    {
+                        wpfRT5.Background = brush;
+                        wpfRT5.Visibility = Visibility.Visible;
+                    }
+                    if (lijn.PositieOpDeLijn == 6)
+                    {
+                        wpfRT6.Background = brush;
+                        wpfRT6.Visibility = Visibility.Visible;
+                    }
+                    if (lijn.PositieOpDeLijn == 7)
+                    {
+                        wpfRT7.Background = brush;
+                        wpfRT7.Visibility = Visibility.Visible;
+                    }
+                    if (lijn.PositieOpDeLijn == 8)
+                    {
+                        wpfRT8.Background = brush;
+                        wpfRT8.Visibility = Visibility.Visible;
+                    }
+                    if (lijn.PositieOpDeLijn == 9)
+                    {
+                        wpfRT9.Background = brush;
+                        wpfRT9.Visibility = Visibility.Visible;
                     }
                 }
             }
@@ -147,15 +150,24 @@ namespace WaterskibaanScherm
         {
             if (!gameRunning)
             {
-                game.StartTimer(1000);
+                timer = new Timer(10);
+                timer.AutoReset = true;
+                timer.Elapsed += Timer_Elapsed;
+                game.StartTimer(100);
+                timer.Start();
                 gameRunning = true;
-                StartUpdating();
+
             }
             else
             {
                 game.StopTimer();
                 gameRunning = false;
             }
+        }
+
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Dispatcher.Invoke(WpfNieuweBezoeker);
         }
     }
 }

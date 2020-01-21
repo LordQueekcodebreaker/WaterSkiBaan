@@ -65,12 +65,12 @@ namespace Waterskibaan
                 Sporter sporter = new Sporter(MoveCollection.GetWillekeurigeMoves());
                 NieuweBezoeker?.Invoke(new NieuweBezoekerArgs(sporter));
             }
-            if (timed % 20 == 0)
+            if (timed % 21 == 0)
             {
                 List<Sporter> sporters = wachtrijInstructie.SportersVerlatenRij(wachtrijInstructie.GetAlleSporters().Count);
                 instructieAfgelopen?.Invoke(new InstructieAfgelopenArgs(sporters));
             }
-            if (timed > 31 && timed % 4 == 0)
+            if (timed > 30 && timed % 3 == 0)
             {
                 LijnenVerplaatst?.Invoke();
             }
@@ -82,8 +82,6 @@ namespace Waterskibaan
         {
             wachtrijInstructie.SporterNeemtPlaats(e.Sporter);
             Console.WriteLine($"event on nieuwe bezoeker {wachtrijInstructie.GetAantal()} ");
-            CurrentState = State.WI;
-            Notify();
         }
 
         //functional
@@ -94,7 +92,7 @@ namespace Waterskibaan
                 instructieGroep.SporterNeemtPlaats(sporter);
             }
             Console.WriteLine($"Event on instr. afgelopen {instructieGroep.GetAantal()}");
-            System.Threading.Thread.Sleep(10000);
+            System.Threading.Thread.Sleep(1000);
             List<Sporter> sporters = instructieGroep.SportersVerlatenRij(instructieGroep.GetAlleSporters().Count);
             foreach (Sporter sporter in sporters)
             {
@@ -112,16 +110,13 @@ namespace Waterskibaan
                 List<Sporter> sporters = wachtrijStarten.SportersVerlatenRij(1);
                 if (sporters.Count > 0)
                 {
-
                     var sporter = sporters[0];
                     sporter.Zwemvest = new Zwemvest();
                     sporter.Skies = new Skies();
-
-                    Console.WriteLine("reached it");
                     waterskiBaan.SporterStart(sporter);
                 }
             }
-            Console.WriteLine($"status{waterskiBaan}");
+            Console.WriteLine($"status\n{waterskiBaan}");
 
         }
 
