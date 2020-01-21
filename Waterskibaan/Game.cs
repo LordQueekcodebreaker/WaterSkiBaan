@@ -4,15 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
-using WaterskibaanScherm;
 
 namespace Waterskibaan
 {
-    public enum State { IG, WI, WS, Clear }
-    public class Game : ISubject
+    public class Game 
     {
-        public IObserver Observer { get; set; }
-        public State CurrentState { get; set; }
+        public  Logger Log { get; set; }
         public Timer timer { get; set; }
         public Waterskibaan waterskiBaan = new Waterskibaan();
 
@@ -29,6 +26,13 @@ namespace Waterskibaan
         public delegate void LijnenVerplaatstHandler();
         public event LijnenVerplaatstHandler LijnenVerplaatst;
 
+        public int TotaalAantalBezoekers { get; set; }
+        public int HoogstBehaaldeScore { get; set; }
+        public int BezoekersInRodeKleding { get; set; }
+        public int AantalRondjesTotaal { get; set; }
+        public IList<string> UniekeMoves { get; set; }
+        public IList<Color> Kleurtjes { get; set; }
+
         public int timed;
 
         public void Intialize()
@@ -37,6 +41,7 @@ namespace Waterskibaan
             NieuweBezoeker += OnNieuweBezoeker;
             instructieAfgelopen += OninstructieAfgelopen;
             LijnenVerplaatst += OnLijnenVerplaatst;
+            Log = new Logger(waterskiBaan._kabel);
         }
 
         public void StartTimer(int interval)
@@ -82,6 +87,7 @@ namespace Waterskibaan
         {
             wachtrijInstructie.SporterNeemtPlaats(e.Sporter);
             Console.WriteLine($"event on nieuwe bezoeker {wachtrijInstructie.GetAantal()} ");
+            Log.Logging.Add(e.Sporter);
         }
 
         //functional
@@ -118,19 +124,6 @@ namespace Waterskibaan
             }
             Console.WriteLine($"status\n{waterskiBaan}");
 
-        }
-
-        public void Attach(IObserver observer)
-        {
-            Observer = observer;
-        }
-
-        public void Notify()
-        {
-            if (Observer != null)
-            {
-                Observer.UpdateLists();
-            }
         }
     }
 }
