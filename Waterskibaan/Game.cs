@@ -53,9 +53,6 @@ namespace Waterskibaan
             timer.Dispose();
         }
 
-
-
-
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             timed++;
@@ -75,8 +72,6 @@ namespace Waterskibaan
             }
         }
 
-
-        //functional
         private void OnNieuweBezoeker(NieuweBezoekerArgs e)
         {
             wachtrijInstructie.SporterNeemtPlaats(e.Sporter);
@@ -86,7 +81,6 @@ namespace Waterskibaan
             Log.Logging.Add(e.Sporter);
         }
 
-        //functional
         private void OninstructieAfgelopen(InstructieAfgelopenArgs e)
         {
             foreach (Sporter sporter in e.Sporters)
