@@ -49,6 +49,25 @@ namespace Waterskibaan
             }
         }
 
+        public void MoveUitvoeren()
+        {
+            foreach (var lijn in _kabel.Lijnen)
+            {
+                var sporter = lijn.Sporter;
+
+                if (sporter.Moves.Count > 0)
+                {
+                    int movePoints = sporter.HuidigeMove.Move();
+                    if (movePoints > 0)
+                    {
+                        sporter.BehaaldePunten += movePoints;
+                        sporter.HuidigeMove = sporter.Moves.Last();
+                        sporter.Moves.RemoveAt(sporter.Moves.Count - 1);
+                    }
+                }
+            }
+        }
+
         public override string ToString()
         {
             return $"Lijnvoorraad: {_lijnenVoorraad.ToString()}\nKabelbezetting: {_kabel.ToString()}";

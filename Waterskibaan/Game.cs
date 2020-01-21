@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Drawing;
 
 namespace Waterskibaan
 {
@@ -25,13 +26,6 @@ namespace Waterskibaan
 
         public delegate void LijnenVerplaatstHandler();
         public event LijnenVerplaatstHandler LijnenVerplaatst;
-
-        public int TotaalAantalBezoekers { get; set; }
-        public int HoogstBehaaldeScore { get; set; }
-        public int BezoekersInRodeKleding { get; set; }
-        public int AantalRondjesTotaal { get; set; }
-        public IList<string> UniekeMoves { get; set; }
-        public IList<Color> Kleurtjes { get; set; }
 
         public int timed;
 
@@ -123,7 +117,7 @@ namespace Waterskibaan
                 }
             }
             Console.WriteLine($"status\n{waterskiBaan}");
-
+            waterskiBaan.MoveUitvoeren();
         }
     }
 }

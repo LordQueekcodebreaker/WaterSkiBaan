@@ -11,7 +11,7 @@ namespace Waterskibaan
         public int Move()
         {
             Random r = new Random();
-            int b = r.Next(4);
+            int b = r.Next(8);
             if (b <= 2) { return 1; }
             return 0;
         }

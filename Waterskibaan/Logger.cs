@@ -46,7 +46,7 @@ namespace Waterskibaan
         {
 
             return Logging.OrderByDescending(b => GetColorSize(Color.FromArgb(b.KledingKleur.Item1, b.KledingKleur.Item2, b.KledingKleur.Item3)))
-                .Select(s => Color.FromArgb(b.KledingKleur.Item1, b.KledingKleur.Item2, b.KledingKleur.Item3))
+                .Select(b => Color.FromArgb(b.KledingKleur.Item1, b.KledingKleur.Item2, b.KledingKleur.Item3))
                 .Take(10)
                 .ToList();
         }

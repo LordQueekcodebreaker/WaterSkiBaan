@@ -20,28 +20,82 @@ namespace WaterskibaanScherm
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, IObserver
+    public partial class MainWindow : Window
     {
+        private Logger _logger; 
         public Timer timer { get; set; }
         private Game game = new Game();
+        
         bool gameRunning = false;
         int currentPosition = 22;
+        int timed = 0;
 
 
         List<Sporter> _startWachtrij = new List<Sporter>();
         List<Sporter> _instructieWachtrij = new List<Sporter>();
         List<Sporter> _instructiegroep = new List<Sporter>();
 
+        public int TotaalAantalBezoekers { get; set; }
+        public int HoogstBehaaldeScore { get; set; }
+        public int BezoekersInRodeKleding { get; set; }
+        public int AantalRondjesTotaal { get; set; }
+        public IList<string> UniekeMoves { get; set; }
+        public IList<Color> Kleurtjes { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
             game.Intialize();
+
+            _logger = game.Log;
         }
 
-
-        private void WpfNieuweBezoeker()
+        private void UpdateStats()
         {
+            var totaalAantalBezoeker = _logger.AantalBezoekersInTotaal();
+            if (totaalAantalBezoeker != TotaalAantalBezoekers)
+            {
+                TotaalAantalBezoekers = totaalAantalBezoeker;
+            }
+
+            var hoogstBehaaldeScore = _logger.HoogsteScoreMoves();
+            if (hoogstBehaaldeScore != HoogstBehaaldeScore)
+            {
+                HoogstBehaaldeScore = hoogstBehaaldeScore;
+            }
+
+            var totaalBezoekersInRodeKleding = _logger.TelrodeSporters();
+            if (totaalBezoekersInRodeKleding != BezoekersInRodeKleding)
+            {
+                BezoekersInRodeKleding = totaalBezoekersInRodeKleding;
+            }
+
+            var totaalAantalRondjes = _logger.TotaalAantalRondjes();
+            if (totaalAantalRondjes != AantalRondjesTotaal)
+            {
+                AantalRondjesTotaal = totaalAantalRondjes;
+            }
+
+            var uniekeMoves = _logger.UniekeMoves();
+            if (uniekeMoves != UniekeMoves)
+            {
+                UniekeMoves = uniekeMoves;
+            }
+
+
+
+            var tienlichste = _logger.TienLichtsteKleuren();
+            var nieuweKleuren = new List<Color>();
+            foreach (var kleur in tienlichste)
+            {
+                nieuweKleuren.Add(Color.FromRgb(kleur.R, kleur.G, kleur.B));
+            }
+            Kleurtjes = nieuweKleuren;
+        }
+
+        private void UpdateScreen()
+        {
+            timed++;
             _instructieWachtrij = game.wachtrijInstructie.GetAlleSporters();
             DrawSporters(_instructieWachtrij, wpfCVWachtrijInstructie);
             _instructiegroep = game.instructieGroep.GetAlleSporters();
@@ -49,22 +103,12 @@ namespace WaterskibaanScherm
             wpfLBLineAmount.Content = game.waterskiBaan._lijnenVoorraad.GetAantalLijnen();
             _startWachtrij = game.wachtrijStarten.GetAlleSporters();
             DrawSporters(_startWachtrij, wpfCVWachtrijStarten);
-            UpdateKabel();
-        }
-
-        public void UpdateLists()
-        {
-            _instructiegroep = game.instructieGroep.GetAlleSporters();
-            DrawSporters(_instructiegroep, wpfCVInstructiegroep);
-
-
-
-            if (game.waterskiBaan._kabel.Lijnen.Count > 0)
+            if (timed % 33 == 0)
             {
                 UpdateKabel();
+                UpdateStats();
             }
-
-            game.CurrentState = State.Clear;
+            
         }
 
         //TODO: Improve if possible
@@ -150,7 +194,7 @@ namespace WaterskibaanScherm
         {
             if (!gameRunning)
             {
-                timer = new Timer(10);
+                timer = new Timer(100);
                 timer.AutoReset = true;
                 timer.Elapsed += Timer_Elapsed;
                 game.StartTimer(100);
@@ -167,7 +211,7 @@ namespace WaterskibaanScherm
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Dispatcher.Invoke(WpfNieuweBezoeker);
+            Dispatcher.Invoke(UpdateScreen);
         }
     }
 }
