@@ -15,13 +15,21 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Rectangle x:Name="wpfRTone" Height="40" Width="40" Grid.Row="3" Margin="30,24,713.6,10.4" />
-
-
         <Canvas x:Name="wpfCVWachtrijInstructie" Grid.Row="0" Background="Aqua" Margin="3"/>
         <Canvas x:Name="wpfCVInstructiegroep" Grid.Row="1" Background="AntiqueWhite" Margin="3"/>
         <Canvas x:Name="wpfCVWachtrijStarten" Grid.Row="2" Background="Aqua" Margin="3"/>
         <Button x:Name="wpfBTStart" Content="Start/Stop" Width="80" Height="20" Grid.Row="5" Click="wpfBTStart_Click" />
+        <Label x:Name="wpfLBLineAmount" Content="" Grid.Row="4" Height="20" Width="80"/>
+        <TextBlock x:Name="wpfRT1" Text="0" TextAlignment="Center"  Height="40" Width="40" Grid.Row="3" Margin="30,24,713.6,10.4" Visibility="Hidden" />
+        <TextBlock x:Name="wpfRT0" Text="1" TextAlignment="Center"  Height="40" Width="40" Grid.Row="3" Margin="75,24,668.6,10.4" Visibility="Hidden"/>
+        <TextBlock x:Name="wpfRT6" Text="2" TextAlignment="Center"  Height="40" Width="40" Grid.Row="3" Margin="120,24,623.6,10.4" Visibility="Hidden"/>
+        <TextBlock x:Name="wpfRT5" Text="3" TextAlignment="Center"  Height="40" Width="40" Grid.Row="3" Margin="165,24,578.6,10.4" Visibility="Hidden"/>
+        <TextBlock x:Name="wpfRT4" Text="4" TextAlignment="Center"  Height="40" Width="40" Grid.Row="3" Margin="210,24,533.6,10.4" Visibility="Hidden"/>
+        <TextBlock x:Name="wpfRT3" Text="5" TextAlignment="Center"  Height="40" Width="40" Grid.Row="3" Margin="255,24,488.6,10.4" Visibility="Hidden"/>
+        <TextBlock x:Name="wpfRT2" Text="6" TextAlignment="Center"  Height="40" Width="40" Grid.Row="3" Margin="300,24,443.6,10.4" Visibility="Hidden"/>
+        <TextBlock x:Name="wpfRT9" Text="7" TextAlignment="Center"  Height="40" Width="40" Grid.Row="3" Margin="345,24,398.6,10.4" Visibility="Hidden"/>
+        <TextBlock x:Name="wpfRT8" Text="8" TextAlignment="Center"  Height="40" Width="40" Grid.Row="3" Margin="392,24,351.6,10.4" Visibility="Hidden"/>
+        <TextBlock x:Name="wpfRT7" Text="9" TextAlignment="Center"  Height="40" Width="40" Grid.Row="3" Margin="441,24,302.6,10.4" Visibility="Hidden"/>
     </Grid>
 
 </Window>

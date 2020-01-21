@@ -4,11 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using WaterskibaanScherm;
 
 namespace Waterskibaan
 {
-    public class Game
+    public enum State { IG, WI, WS, Clear }
+    public class Game : ISubject
     {
+        public IObserver Observer { get; set; }
+        public State CurrentState { get; set; }
         public Timer timer { get; set; }
         public Waterskibaan waterskiBaan = new Waterskibaan();
 
@@ -51,6 +55,8 @@ namespace Waterskibaan
         }
 
 
+
+
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             timed++;
@@ -64,7 +70,7 @@ namespace Waterskibaan
                 List<Sporter> sporters = wachtrijInstructie.SportersVerlatenRij(wachtrijInstructie.GetAlleSporters().Count);
                 instructieAfgelopen?.Invoke(new InstructieAfgelopenArgs(sporters));
             }
-            if (timed > 30 && timed % 4 == 0)
+            if (timed > 31 && timed % 4 == 0)
             {
                 LijnenVerplaatst?.Invoke();
             }
@@ -76,6 +82,8 @@ namespace Waterskibaan
         {
             wachtrijInstructie.SporterNeemtPlaats(e.Sporter);
             Console.WriteLine($"event on nieuwe bezoeker {wachtrijInstructie.GetAantal()} ");
+            CurrentState = State.WI;
+            Notify();
         }
 
         //functional
@@ -115,6 +123,19 @@ namespace Waterskibaan
             }
             Console.WriteLine($"status{waterskiBaan}");
 
+        }
+
+        public void Attach(IObserver observer)
+        {
+            Observer = observer;
+        }
+
+        public void Notify()
+        {
+            if (Observer != null)
+            {
+                Observer.UpdateLists();
+            }
         }
     }
 }
