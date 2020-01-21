@@ -80,6 +80,8 @@ namespace Waterskibaan
         private void OnNieuweBezoeker(NieuweBezoekerArgs e)
         {
             wachtrijInstructie.SporterNeemtPlaats(e.Sporter);
+            Random r = new Random();
+            e.Sporter.AantalRondesTeGaan = r.Next(3);
             Console.WriteLine($"event on nieuwe bezoeker {wachtrijInstructie.GetAantal()} ");
             Log.Logging.Add(e.Sporter);
         }
@@ -90,6 +92,7 @@ namespace Waterskibaan
             foreach (Sporter sporter in e.Sporters)
             {
                 instructieGroep.SporterNeemtPlaats(sporter);
+                Log.GooiSportersinLijst(sporter);
             }
             Console.WriteLine($"Event on instr. afgelopen {instructieGroep.GetAantal()}");
             System.Threading.Thread.Sleep(1000);
@@ -110,6 +113,7 @@ namespace Waterskibaan
                 List<Sporter> sporters = wachtrijStarten.SportersVerlatenRij(1);
                 if (sporters.Count > 0)
                 {
+                    
                     var sporter = sporters[0];
                     sporter.Zwemvest = new Zwemvest();
                     sporter.Skies = new Skies();
@@ -117,7 +121,6 @@ namespace Waterskibaan
                 }
             }
             Console.WriteLine($"status\n{waterskiBaan}");
-            waterskiBaan.MoveUitvoeren();
         }
     }
 }

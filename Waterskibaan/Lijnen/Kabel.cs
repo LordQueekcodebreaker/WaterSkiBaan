@@ -47,7 +47,6 @@ namespace Waterskibaan
                     lijn.Sporter.AantalRondesTeGaan--;
                 }
             }
-            //terug naar af omdat lijnen in volgorde van positie moeten staan
             if (laatsteLijnTerugNaarStart)
             {
                 var laaststelijn = Lijnen.Last.Value;

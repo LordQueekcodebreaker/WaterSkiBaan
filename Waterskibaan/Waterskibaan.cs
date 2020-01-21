@@ -42,30 +42,30 @@ namespace Waterskibaan
         public void VerplaatsKabel()
         {
             _kabel.VerschuifLijnen();
+            MoveUitvoeren(_kabel.Lijnen);
             var verwijderdelijn = _kabel.VerwijderLijnVanKabel();
-            if (verwijderdelijn != null)
+            if (verwijderdelijn != null )
             {
                 _lijnenVoorraad.LijnToevoegenAanRij(verwijderdelijn);
             }
         }
 
-        public void MoveUitvoeren()
+        public void MoveUitvoeren(LinkedList<Lijn> lijnen)
         {
-            foreach (var lijn in _kabel.Lijnen)
+            foreach (Lijn lijn in lijnen)
             {
                 var sporter = lijn.Sporter;
-
                 if (sporter.Moves.Count > 0)
                 {
-                    int movePoints = sporter.HuidigeMove.Move();
-                    if (movePoints > 0)
+                    int points = sporter.Moves[0].Move();
+                    if (points > 0)
                     {
-                        sporter.BehaaldePunten += movePoints;
-                        sporter.HuidigeMove = sporter.Moves.Last();
-                        sporter.Moves.RemoveAt(sporter.Moves.Count - 1);
+                        sporter.HuidigeMove = sporter.Moves[0];
+                        sporter.BehaaldePunten += points;
+                        sporter.Moves.RemoveAt(0);
                     }
                 }
-            }
+            } 
         }
 
         public override string ToString()

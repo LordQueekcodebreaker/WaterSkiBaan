@@ -16,6 +16,7 @@ namespace Waterskibaan
         public Logger(Kabel kabel)
         {
             _kabellogger = kabel;
+
         }
 
         public void GooiSportersinLijst(Sporter sp)
@@ -60,12 +61,12 @@ namespace Waterskibaan
                    .ToList();
         }
 
-        public string PrintGedeelte()
+        public string Printlist(IList<string> list)
         {
             String zin = "";
-            foreach (var letter in Logging)
+            foreach (var letter in list)
             {
-                zin += letter.ToString();
+                zin += letter.ToString()+",";
             }
             return zin;
         }

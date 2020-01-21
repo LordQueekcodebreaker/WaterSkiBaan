@@ -28,7 +28,7 @@ namespace WaterskibaanScherm
         
         bool gameRunning = false;
         int currentPosition = 22;
-        int timed = 0;
+        int count = 0;
 
 
         List<Sporter> _startWachtrij = new List<Sporter>();
@@ -39,7 +39,7 @@ namespace WaterskibaanScherm
         public int HoogstBehaaldeScore { get; set; }
         public int BezoekersInRodeKleding { get; set; }
         public int AantalRondjesTotaal { get; set; }
-        public IList<string> UniekeMoves { get; set; }
+        public IList<string> UniekeMoves { get; set; } 
         public IList<Color> Kleurtjes { get; set; }
 
         public MainWindow()
@@ -52,66 +52,100 @@ namespace WaterskibaanScherm
 
         private void UpdateStats()
         {
-            var totaalAantalBezoeker = _logger.AantalBezoekersInTotaal();
+            int totaalAantalBezoeker = _logger.AantalBezoekersInTotaal();
             if (totaalAantalBezoeker != TotaalAantalBezoekers)
             {
                 TotaalAantalBezoekers = totaalAantalBezoeker;
+                wpfLBTotalVisitors.Text = TotaalAantalBezoekers.ToString();
             }
 
-            var hoogstBehaaldeScore = _logger.HoogsteScoreMoves();
+            int hoogstBehaaldeScore = _logger.HoogsteScoreMoves();
             if (hoogstBehaaldeScore != HoogstBehaaldeScore)
             {
                 HoogstBehaaldeScore = hoogstBehaaldeScore;
+                wpfLBHighestScore.Text = HoogstBehaaldeScore.ToString();
             }
 
-            var totaalBezoekersInRodeKleding = _logger.TelrodeSporters();
+            int totaalBezoekersInRodeKleding = _logger.TelrodeSporters();
             if (totaalBezoekersInRodeKleding != BezoekersInRodeKleding)
             {
                 BezoekersInRodeKleding = totaalBezoekersInRodeKleding;
+                wpfLBRedVistors.Text = BezoekersInRodeKleding.ToString();
             }
 
-            var totaalAantalRondjes = _logger.TotaalAantalRondjes();
+            int totaalAantalRondjes = _logger.TotaalAantalRondjes();
             if (totaalAantalRondjes != AantalRondjesTotaal)
             {
                 AantalRondjesTotaal = totaalAantalRondjes;
+                wpfLBTotalAmountRounds.Text = AantalRondjesTotaal.ToString();
             }
 
             var uniekeMoves = _logger.UniekeMoves();
-            if (uniekeMoves != UniekeMoves)
+            if (uniekeMoves != UniekeMoves && uniekeMoves.Count > count)
             {
                 UniekeMoves = uniekeMoves;
+                count = uniekeMoves.Count;
+                wpfLBUniqueMoves.Text = _logger.Printlist(UniekeMoves);
             }
-
-
 
             var tienlichste = _logger.TienLichtsteKleuren();
             var nieuweKleuren = new List<Color>();
             foreach (var kleur in tienlichste)
             {
-                nieuweKleuren.Add(Color.FromRgb(kleur.R, kleur.G, kleur.B));
+                nieuweKleuren.Add(Color.FromRgb(kleur.R, kleur.G, kleur.B)) ;
             }
             Kleurtjes = nieuweKleuren;
+            DrawLightestColors(Kleurtjes);
+            
+        }
+
+        public void CheckForMoves()
+        {
+            foreach (Lijn lijn in game.waterskiBaan._kabel.Lijnen)
+            {
+                if (lijn.Sporter.HuidigeMove != null)
+                {
+                    wpfLBLastMove.Text = lijn.Sporter.HuidigeMove.Naam();
+                    lijn.Sporter.HuidigeMove = null;
+                }
+            }
+        }
+
+        public void DrawLightestColors(IList<Color> colors)
+        {
+            int position = 0;
+            foreach (var item in colors)
+            {
+                Rectangle rectangle = new Rectangle();
+                rectangle.Fill = new SolidColorBrush(item);
+                rectangle.Width = 15;
+                rectangle.Height = 20;
+                Canvas.SetTop(rectangle, 0);
+                Canvas.SetLeft(rectangle, position);
+                wpfCVSortedOnColor.Children.Add(rectangle);
+                position += 20;
+            }
+
         }
 
         private void UpdateScreen()
         {
-            timed++;
             _instructieWachtrij = game.wachtrijInstructie.GetAlleSporters();
             DrawSporters(_instructieWachtrij, wpfCVWachtrijInstructie);
             _instructiegroep = game.instructieGroep.GetAlleSporters();
             DrawSporters(_instructiegroep, wpfCVInstructiegroep);
-            wpfLBLineAmount.Content = game.waterskiBaan._lijnenVoorraad.GetAantalLijnen();
+            wpfLBAvailableLines.Text = game.waterskiBaan._lijnenVoorraad.GetAantalLijnen().ToString();
             _startWachtrij = game.wachtrijStarten.GetAlleSporters();
             DrawSporters(_startWachtrij, wpfCVWachtrijStarten);
-            if (timed % 33 == 0)
+            UpdateKabel();
+            if (game.waterskiBaan._kabel.Lijnen.Count >0)
             {
-                UpdateKabel();
                 UpdateStats();
+                CheckForMoves();
             }
             
         }
 
-        //TODO: Improve if possible
         public void UpdateKabel()
         {
             foreach (var lijn in game.waterskiBaan._kabel.Lijnen)

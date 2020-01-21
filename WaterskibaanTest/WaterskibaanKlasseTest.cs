@@ -9,14 +9,16 @@ namespace WaterskibaanTest
     [TestFixture]
     class WaterskibaanKlasseTest
     {
+        [Test]
         public void SporterStart_NoSKiesORvest_ThrowException()
         {
             //arrange
             Waterskibaan.Waterskibaan waterskibaan = new Waterskibaan.Waterskibaan();
-            //act
-            waterskibaan.SporterStart(new Sporter(MoveCollection.GetWillekeurigeMoves()));
             //assert
+            Assert.Throws<Exception>(() => waterskibaan.SporterStart(new Sporter(MoveCollection.GetWillekeurigeMoves())));
             //TODO: add a Assert check for exceptions
         }
+
+
     }
 }
